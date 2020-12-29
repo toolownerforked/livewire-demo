@@ -1,0 +1,28 @@
+version: "3"
+services:
+  app:
+    image: webdevops/php-apache-dev:7.4
+    networks:
+      - proxy
+    ports:
+      - 9500:80
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      - PHP_MEMORY_LIMIT=-1
+      - PHP_DEBUGGER=xdebug
+      - PHP_DISPLAY_ERRORS=1
+      - PHP_DATE_TIMEZONE=Asia/Ho_Chi_Minh
+      - WEB_DOCUMENT_ROOT=/app/public
+  nodejs:
+    image: node:12
+    stdin_open: true
+    networks:
+      - proxy
+    working_dir: /app
+    volumes:
+      - .:/app
+networks:
+  proxy:
+    external: true
